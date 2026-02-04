@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ink Painting 3D Reconstruction</title>
+    <meta name="description" content="Ink Painting 3D Reconstruction via Style-Enhanced Monocular Depth Estimation" />
+    <style>
+        :root{
+          --bg: #0b0b0f;
+          --card: rgba(255,255,255,0.06);
+          --text: rgba(255,255,255,0.92);
+          --muted: rgba(255,255,255,0.65);
+          --border: rgba(255,255,255,0.12);
+          --shadow: 0 10px 30px rgba(0,0,0,0.35);
+          --radius: 18px;
+          --maxw: 1100px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body{
+          margin: 0;
+          font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+          color: var(--text);
+          background:
+            radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,0.08), transparent 60%),
+            radial-gradient(900px 500px at 80% 0%, rgba(99,102,241,0.20), transparent 55%),
+            radial-gradient(900px 500px at 70% 90%, rgba(16,185,129,0.12), transparent 55%),
+            var(--bg);
+        }
+
+        .wrap{
+          min-height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 56px 18px;
+        }
+
+        .container{
+          width: min(var(--maxw), 100%);
+          text-align: center;
+        }
+
+        h1{
+          margin: 0 0 14px;
+          font-size: clamp(28px, 3.6vw, 44px);
+          line-height: 1.15;
+          letter-spacing: 0.2px;
+          font-weight: 800;
+          text-shadow: 0 8px 40px rgba(0,0,0,0.35);
+        }
+
+        .sub{
+          margin: 0 auto 28px;
+          max-width: 900px;
+          color: var(--muted);
+          font-size: 15px;
+          line-height: 1.6;
+        }
+
+        .grid{
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 16px;
+          margin-top: 18px;
+        }
+
+        .card{
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: var(--radius);
+          box-shadow: var(--shadow);
+          overflow: hidden;
+          backdrop-filter: blur(10px);
+        }
+
+        video{
+          width: 100%;
+          height: auto;
+          display: block;
+          aspect-ratio: 16 / 9;
+          background: #000;
+        }
+
+        .caption{
+          padding: 10px 12px 12px;
+          font-size: 13px;
+          color: var(--muted);
+          border-top: 1px solid var(--border);
+        }
+
+        footer{
+          margin-top: 22px;
+          color: rgba(255,255,255,0.45);
+          font-size: 12px;
+        }
+
+        @media (max-width: 900px){
+          .grid{ grid-template-columns: 1fr; }
+          .sub{ padding: 0 6px; }
+        }
+    </style>
+</head>
+
+<body>
+<div class="wrap">
+    <main class="container">
+        <h1>Ink Painting 3D Reconstruction via Style-Enhanced Monocular Depth Estimation</h1>
+        <p class="sub">Videos</p>
+
+        <section class="grid" aria-label="Video results">
+            <div class="card">
+                <video controls playsinline preload="metadata">
+                    <source src="1.mp4" type="video/mp4" />
+                    你的浏览器不支持 video 标签。
+                </video>
+                <div class="caption">1.mp4</div>
+            </div>
+
+            <div class="card">
+                <video controls playsinline preload="metadata">
+                    <source src="2.mp4" type="video/mp4" />
+                    你的浏览器不支持 video 标签。
+                </video>
+                <div class="caption">2.mp4</div>
+            </div>
+
+            <div class="card">
+                <video controls playsinline preload="metadata">
+                    <source src="3.mp4" type="video/mp4" />
+                    你的浏览器不支持 video 标签。
+                </video>
+                <div class="caption">3.mp4</div>
+            </div>
+        </section>
+
+        <footer>
+            © <span id="y"></span> • GitHub Pages
+        </footer>
+    </main>
+</div>
+
+<script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
