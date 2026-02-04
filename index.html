@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ink Painting 3D Reconstruction</title>
   <meta name="description" content="Ink Painting 3D Reconstruction via Style-Enhanced Monocular Depth Estimation" />
+
   <style>
     :root{
       --bg: #0b0b0f;
@@ -14,16 +15,19 @@
       --border: rgba(255,255,255,0.12);
       --shadow: 0 10px 30px rgba(0,0,0,0.35);
       --radius: 18px;
-      --maxw: 1100px;
-      --link: rgba(255,255,255,0.88);
-      --linkHover: rgba(255,255,255,1);
+      --maxw: 980px;
+
+      /* 整体字体更大 */
+      --base-font: 18px;
     }
 
     * { box-sizing: border-box; }
     html, body { height: 100%; }
+
     body{
       margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: var(--base-font);
       color: var(--text);
       background:
         radial-gradient(1200px 600px at 20% 10%, rgba(255,255,255,0.08), transparent 60%),
@@ -46,99 +50,120 @@
     }
 
     h1{
-      margin: 0 0 10px;
-      font-size: clamp(28px, 3.6vw, 44px);
-      line-height: 1.15;
-      letter-spacing: 0.2px;
-      font-weight: 800;
+      margin: 0 0 12px;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1.12;
+      font-weight: 850;
       text-shadow: 0 8px 40px rgba(0,0,0,0.35);
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 12px;
       align-items: baseline;
       justify-content: center;
     }
 
     .repo-link{
-      font-size: 0.48em;
-      font-weight: 650;
-      padding: 6px 10px;
+      font-size: 0.44em;
+      font-weight: 700;
+      padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
       background: rgba(255,255,255,0.06);
-      color: var(--link);
+      color: rgba(255,255,255,0.88);
       text-decoration: none;
-      transition: transform 120ms ease, background 120ms ease, color 120ms ease, border-color 120ms ease;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease, color 120ms ease;
       white-space: nowrap;
     }
     .repo-link:hover{
-      color: var(--linkHover);
+      color: rgba(255,255,255,1);
       background: rgba(255,255,255,0.10);
       border-color: rgba(255,255,255,0.18);
       transform: translateY(-1px);
-    }
-    .repo-link:active{
-      transform: translateY(0px);
     }
 
     .authors{
       margin: 0 auto 18px;
       max-width: 980px;
-      color: rgba(255,255,255,0.78);
-      font-size: 15px;
-      line-height: 1.6;
+      color: rgba(255,255,255,0.80);
+      font-size: 18px;
+      line-height: 1.7;
     }
 
     .sub{
-      margin: 0 auto 26px;
+      margin: 0 auto 22px;
       max-width: 900px;
       color: var(--muted);
-      font-size: 14px;
+      font-size: 16px;
       line-height: 1.6;
     }
 
-    .grid{
+    /* 纵向排列：等宽、等间距 */
+    .list{
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 10px;
+      grid-template-columns: 1fr;
+      gap: 18px;
+      margin-top: 8px;
     }
 
     .card{
+      width: 100%;
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow: hidden;
       backdrop-filter: blur(10px);
+      text-align: left;
     }
 
     video{
       width: 100%;
-      height: auto;
       display: block;
       aspect-ratio: 16 / 9;
       background: #000;
     }
 
-    .caption{
-      padding: 10px 12px 12px;
-      font-size: 13px;
-      color: var(--muted);
+    .meta{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px 14px;
       border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .file{
+      font-weight: 650;
+      color: rgba(255,255,255,0.78);
+    }
+
+    .hint{
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .error{
+      display: none;
+      padding: 12px 14px 14px;
+      border-top: 1px solid rgba(255,80,80,0.25);
+      background: rgba(255,80,80,0.06);
+      color: rgba(255,200,200,0.92);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     footer{
-      margin-top: 22px;
+      margin-top: 24px;
       color: rgba(255,255,255,0.45);
-      font-size: 12px;
+      font-size: 14px;
     }
 
-    @media (max-width: 900px){
-      .grid{ grid-template-columns: 1fr; }
-      .authors, .sub{ padding: 0 6px; }
-      h1{ gap: 8px; }
-      .repo-link{ font-size: 0.52em; }
+    @media (max-width: 600px){
+      :root{ --base-font: 17px; }
+      .repo-link{ font-size: 0.48em; }
+      .authors{ font-size: 17px; }
     }
   </style>
 </head>
@@ -149,7 +174,7 @@
       <h1>
         Ink Painting 3D Reconstruction via Style-Enhanced Monocular Depth Estimation
         <a class="repo-link" href="https://github.com/jiangfeng-Z/CPSNet" target="_blank" rel="noopener noreferrer">
-          GitHub
+          GitHub Repo
         </a>
       </h1>
 
@@ -159,30 +184,8 @@
 
       <p class="sub">Videos</p>
 
-      <section class="grid" aria-label="Video results">
-        <div class="card">
-          <video controls playsinline preload="metadata">
-            <source src="1.mp4" type="video/mp4" />
-            你的浏览器不支持 video 标签。
-          </video>
-          <div class="caption">1.mp4</div>
-        </div>
-
-        <div class="card">
-          <video controls playsinline preload="metadata">
-            <source src="2.mp4" type="video/mp4" />
-            你的浏览器不支持 video 标签。
-          </video>
-          <div class="caption">2.mp4</div>
-        </div>
-
-        <div class="card">
-          <video controls playsinline preload="metadata">
-            <source src="3.mp4" type="video/mp4" />
-            你的浏览器不支持 video 标签。
-          </video>
-          <div class="caption">3.mp4</div>
-        </div>
+      <section class="list" id="videoList" aria-label="Video results">
+        <!-- JS 会自动插入 1~4 -->
       </section>
 
       <footer>
@@ -192,7 +195,45 @@
   </div>
 
   <script>
+    // 年份
     document.getElementById("y").textContent = new Date().getFullYear();
+
+    // 自动生成 1.mp4 ~ 4.mp4（同目录）
+    const files = ["1.mp4", "2.mp4", "3.mp4", "4.mp4"];
+    const list = document.getElementById("videoList");
+
+    function makeCard(filename) {
+      const card = document.createElement("div");
+      card.className = "card";
+
+      const video = document.createElement("video");
+      video.controls = true;
+      video.playsInline = true;
+      video.preload = "metadata";
+      video.src = filename; // ✅ 同目录直接引用
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.innerHTML = `<span class="file">${filename}</span><span class="hint"></span>`;
+
+      const err = document.createElement("div");
+      err.className = "error";
+      err.innerHTML =
+        `检测到视频加载/解码失败：<b>${filename}</b><br>` +
+        `可能原因：① 文件名大小写不一致 ② 部署后 404 ③ 编码不兼容（例如 H.265/HEVC）。`;
+
+      // 播放/加载出错时显示提示
+      video.addEventListener("error", () => {
+        err.style.display = "block";
+      });
+
+      card.appendChild(video);
+      card.appendChild(meta);
+      card.appendChild(err);
+      return card;
+    }
+
+    files.forEach(f => list.appendChild(makeCard(f)));
   </script>
 </body>
 </html>
